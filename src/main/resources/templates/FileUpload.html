@@ -14,9 +14,17 @@
 </body>
 <script type="text/javascript">
 	$(function(){
-		$('#uploadFileBtn').click(function(){
-			var fileExt = $('#uploadFile').val().split('.').pop().toLowerCase();
+		$('#uploadFileBtn').click(function(e){
+			var fileValue = $('#uploadFile').val();
+			if(!/\.(dbfile)$/i.test(fileValue)){ // 정규식
+				alert('dbfile 파일만 선택해 주세요.\n\n현재 파일 : ' + fileValue);
+			} else{
+				console.log('확장자 일치');
+				$('#addFileUploadForm').submit();
+			}
+			/* var fileExt = getFileExt(fileValue);
 			console.log(fileExt);
+			console.log(e);
 			if (fileExt == 'dbfile') {
 				console.log('확장자 일치');
 				$('#addFileUploadForm').submit();
@@ -25,8 +33,19 @@
 			} else {
 				console.log('확장자 불일치');
 				alert("파일의 확장자가 dbfile 아닙니다.");
-			}
+			} */
 		});			
 	});
+	
+	// 파일의 확장자를 구하는 함수
+	function getFileExt(filename) {
+		// 파일 이름의 길이
+		var fileLen = filename.length;
+		// 파일의 확장자"."을 뒤에서 부터 찾음(파일명에 "." 포함 될 수 있음)
+		var lastDot = filename.lastIndexOf('.');
+		// 확장자 명만 추출한 후 소문자로 변경
+	    var fileExt = filename.substring(lastDot+1, fileLen).toLowerCase();
+		return fileExt;
+	}
 </script>
 </html>
