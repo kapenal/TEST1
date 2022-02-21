@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ResultPage</title>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+<body>
+	<h1>▼ 전체 성공</h1>
+	<h2 th:text="${SuccessCount}"></h2>
+	<button type="button" id="selectBtn">조회</button>
+	<hr>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>PWD</th>
+				<th>NAME</th>
+				<th>LEVEL</th>
+				<th>DESC</th>
+				<th>REG_DATE</th>
+			</tr>
+		</thead>
+		<tbody id="tbody">
+		
+		</tbody>
+	</table>
+</body>
+<script type="text/javascript">
+	history.replaceState({}, null, location.pathname);
+	$(function(){
+		$('#selectBtn').click(function(){
+			list();
+		});
+	});
+	
+	function list() {
+		$.ajax({
+			type:'get',
+			url:'userList',
+			success:function(json){
+				$('#tbody').empty();
+				for(i in json){
+					var add_data = '';
+	    			add_data += '<tr>';
+
+	    			add_data += '<td>';
+	    			add_data += json[i].id;
+	    			add_data += '</td>';
+
+	    			add_data += '<td>';
+	    			add_data += json[i].pwd;
+	    			add_data += '</td>';
+
+	    			add_data += '<td>';
+	    			add_data += json[i].name;
+	    			add_data += '</td>';
+	    			
+	    			add_data += '<td>';
+	    			add_data += json[i].level;
+	    			add_data += '</td>';
+	    			
+	    			add_data += '<td>';
+	    			add_data += json[i].desc;
+	    			add_data += '</td>';
+	    			
+	    			add_data += '<td>';
+	    			add_data += json[i].regDate;
+	    			add_data += '</td>';
+
+	    			add_data += '</tr>';
+	    			$('#tbody').append(add_data);
+				}
+			}
+		});
+	} 
+</script>
+</html>

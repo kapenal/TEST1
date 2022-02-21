@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>FileUpload</title>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+<body>
+	<h1>파일 업로드</h1>
+	<form method="post" enctype="multipart/form-data" action="FileUpload" id="addFileUploadForm">
+		<input type="file" id="uploadFile" name="uploadFile" required="required">
+		<button type="button" id="uploadFileBtn">업로드</button>
+	</form>
+</body>
+<script type="text/javascript">
+	$(function(){
+		$('#uploadFileBtn').click(function(){
+			let fileName = $('#uploadFile').val();
+			/* 입력받은 파일의 이름을 가져와서 "."까지의 길이를 이용하여 "."뒤에 글자를 추출" */
+			let fileExt = fileName.substr((fileName.lastIndexOf(".")+1 - fileName.length));
+			console.log(fileExt);
+			if (fileExt == 'dbfile') {
+				console.log('확장자 일치');
+				$('#addFileUploadForm').submit();
+			} else if(fileExt == "") { // 따로 함수가 존재함
+				alert("파일을 선택해주십쇼.");
+			} else {
+				console.log('확장자 불일치');
+				alert("파일의 확장자가 dbfile 아닙니다.");
+			}
+		});			
+	});
+</script>
+</html>

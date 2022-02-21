@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.Test.mapper.UserMapper">
+	<select id="selectUserData" resultType="com.example.Test.vo.User">
+		SELECT  id id, pwd pwd, name name, level level, "desc" desc, reg_date regDate
+		FROM public."user"
+	</select>
+</mapper>
