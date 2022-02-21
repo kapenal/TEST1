@@ -4,10 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -38,7 +35,7 @@ public class FileUploadController {
 		 // 입력 후 성공 레코드수 조회
 		int fileUploadLine = 0;
         int uploadSuccessCount = 0;
-        String fileHistory = null;
+        String fileHistory = "";
         List<String> failLine = new ArrayList<>();
 		// 매개변수로 받아온 파일의 이름으로 File타입을 새로 생성
 		File file = new File(uploadFile.getOriginalFilename());
@@ -62,7 +59,8 @@ public class FileUploadController {
 				// 1줄씩 String형 userLine에 저장하여 uploadService호출
 				 String userLine = scan.nextLine();
 				 System.out.println(userLine);
-				 int resultCount = fileUploadService.upload(userLine);
+				 int resultCount = 0;
+				 resultCount = fileUploadService.upload(userLine);
 				 if(resultCount == 0) {
 					 fileHistory = "실패 라인 : "+line+"번째 줄 실패 텍스트 : "+userLine;
 					 failLine.add(fileHistory);
@@ -80,7 +78,8 @@ public class FileUploadController {
         	redirect.addAttribute("uploadSuccessCount", uploadSuccessCount);
         	return "redirect:/ResultPage";
         } else {
-        	int failCount = fileUploadLine - uploadSuccessCount;
+        	int failCount = 0;
+        	failCount = fileUploadLine - uploadSuccessCount;
         	redirect.addAttribute("failCount", failCount);
         	redirect.addAttribute("successCount", uploadSuccessCount);
 			/* redirect.addAttribute("fileHistory", fileHistory); */
@@ -95,6 +94,7 @@ public class FileUploadController {
 		System.out.println(uploadSuccessCount + "넘어온 성공 레코드수");
 		model.addAttribute("SuccessCount", uploadSuccessCount+"건 입력 성공");
 		return "ResultPage";
+		
 	}
 	
 	@GetMapping("/FailPage")

@@ -15,9 +15,7 @@
 <script type="text/javascript">
 	$(function(){
 		$('#uploadFileBtn').click(function(){
-			let fileName = $('#uploadFile').val();
-			/* 입력받은 파일의 이름을 가져와서 "."까지의 길이를 이용하여 "."뒤에 글자를 추출" */
-			let fileExt = fileName.substr((fileName.lastIndexOf(".")+1 - fileName.length));
+			var fileExt = $('#uploadFile').val().split('.').pop().toLowerCase();
 			console.log(fileExt);
 			if (fileExt == 'dbfile') {
 				console.log('확장자 일치');
