@@ -13,9 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.Test.service.FileUploadService;
 
@@ -30,7 +28,7 @@ public class FileUploadController {
 	}
 	
 	@PostMapping("/FileUpload")
-	public String postFileUpload(RedirectAttributes redirect, MultipartFile uploadFile) {
+	public String postFileUpload(Model model,  MultipartFile uploadFile) {
 		// System.out.println(uploadFile + "매개변수 확인");
 		 // 입력 후 성공 레코드수 조회
 		int fileUploadLine = 0;
@@ -75,37 +73,14 @@ public class FileUploadController {
         file.delete();
         
         if(fileUploadLine == uploadSuccessCount) {
-        	redirect.addAttribute("uploadSuccessCount", uploadSuccessCount);
-        	return "redirect:/ResultPage";
+        	model.addAttribute("SuccessCount", uploadSuccessCount+"건 입력 성공");
+        	return "ResultPage";
         } else {
         	int failCount = 0;
         	failCount = fileUploadLine - uploadSuccessCount;
-        	redirect.addAttribute("failCount", failCount);
-        	redirect.addAttribute("successCount", uploadSuccessCount);
-			/* redirect.addAttribute("fileHistory", fileHistory); */
-        	redirect.addAttribute("failLine", failLine);
-        	return "redirect:/FailPage";
+        	model.addAttribute("FailCount", "성공 "+uploadSuccessCount+"건, 실패 "+failCount+"건");
+        	model.addAttribute("failLine", failLine);
+        	return "FailPage";
         }
-	}
-	
-	@GetMapping("/ResultPage")
-	public String getResultPage(Model model ,
-			@RequestParam(defaultValue = "0") int uploadSuccessCount) {
-		System.out.println(uploadSuccessCount + "넘어온 성공 레코드수");
-		model.addAttribute("SuccessCount", uploadSuccessCount+"건 입력 성공");
-		return "ResultPage";
-		
-	}
-	
-	@GetMapping("/FailPage")
-	public String getFailPage(Model model,
-			@RequestParam(defaultValue = "0") int failCount,
-			@RequestParam(defaultValue = "0") int successCount,
-			@RequestParam(defaultValue = "") String fileHistory,
-			@RequestParam(defaultValue = "") List<String> failLine) {
-		model.addAttribute("FailCount", "성공 "+successCount+"건, 실패 "+failCount+"건");
-		/* model.addAttribute("FileHistory", fileHistory); */
-		model.addAttribute("failLine",failLine);
-		return "FailPage";
 	}
 }
