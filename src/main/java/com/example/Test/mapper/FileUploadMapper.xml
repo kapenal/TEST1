@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.Test.mapper.FileUploadMapper">
-	<insert id="fileUpload" parameterType="com.example.Test.vo.User">
-		INSERT INTO public."user" (id, pwd, name, level, "desc", reg_date) 
-		VALUES (#{id}, #{pwd}, #{name}, #{level}, #{desc}, #{regDate}::timestamp)
+	<insert id="fileUpload" parameterType="java.util.List">
+		INSERT INTO "user" (id, pwd, name, level, "desc", reg_date) 
+		VALUES
+		(#{item.id}, #{item.pwd}, #{item.name}, #{item.level}, #{item.desc}, #{item.regDate}::timestamp)
 	</insert>
+	<!-- <insert id="fileUpload" parameterType="java.util.List">
+		INSERT INTO "user" (id, pwd, name, level, "desc", reg_date) 
+		VALUES
+		<foreach collection="userList" item="item" index="index" separator=" , ">
+            (#{item.id}, #{item.pwd}, #{item.name}, #{item.level}, #{item.desc}, #{item.regDate}::timestamp)
+        </foreach>
+	</insert> -->
 </mapper>

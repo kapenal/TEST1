@@ -15,7 +15,6 @@ public class UserService {
 	
 	public List<User> selectUserData() {
 		List<User> userList = userMapper.selectUserData();
-		System.out.println();
 		return userList;
 	}
 }

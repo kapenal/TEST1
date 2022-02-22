@@ -16,7 +16,7 @@
 	$(function(){
 		$('#uploadFileBtn').click(function(e){
 			var fileValue = $('#uploadFile').val();
-			if(!/\.(dbfile)$/i.test(fileValue)){ // 정규식
+			if(!/\.(dbfile)$/i.test(fileValue)){ // 정규표현식
 				alert('dbfile 파일만 선택해 주세요.\n\n현재 파일 : ' + fileValue);
 			} else{
 				console.log('확장자 일치');
